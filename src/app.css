@@ -1,0 +1,6 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans","ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro",YuGothic,"Meiryo","MS Gothic", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
