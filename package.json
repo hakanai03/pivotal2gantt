@@ -12,7 +12,8 @@
     "@ant-design/icons": "^4.7.0",
     "antd": "^4.21.5",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0"
+    "react-dom": "^18.0.0",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/react": "^18.0.0",
