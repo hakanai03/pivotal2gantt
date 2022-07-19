@@ -7,7 +7,7 @@ import {tryImport} from "./importTickets"
 import dayjs, {Dayjs} from 'dayjs'
 import weekday from 'dayjs/plugin/weekday'
 import {DatePicker} from "@/components/DatePicker"
-import {makeGanttTasks} from "./algorithms"
+import {makeGanttTasks} from "./algorithm"
 import {InputNumber} from "antd"
 
 dayjs.extend(weekday)
@@ -34,45 +34,53 @@ export const Pivotal2Excel = () => {
 
   const tasks = makeGanttTasks(tickets, {
     startDay,
-    currentVelocity,
-    workDaysPerWeek,
+    currentVelocity: currentVelocity > 0 ? currentVelocity : 1,
+    workDaysPerWeek: workDaysPerWeek > 0 ? workDaysPerWeek : 1,
     includeBugTicket: true,
   })
 
   return (
-    <>
-      <UploadButton
-        labelId="upload"
-        onSelectFiles={handleSelectFiles}
-        shape="round"
-      >
-        アップロード
-      </UploadButton>
-      <DatePicker
-        defaultValue={startDay}
-        onChange={(day) => day && setStartDay(day)}
-        disabledDate={(day) => day.weekday() !== 1}
-      />
-      の週からプロジェクトを開始し、週あたり
+    <div style={{margin: "1rem"}}>
+      <div style={{display: "flex", justifyContent: "space-between", marginBottom: "1rem"}}>
+        <div>
+          <DatePicker
+            defaultValue={startDay}
+            onChange={(day) => day && setStartDay(day)}
+            disabledDate={(day) => day.weekday() !== 1}
+          />
+          の週からプロジェクトを開始し、週あたり
 
-      <InputNumber<number>
-        onChange={(value) => setCurrentVelocity(value)}
-        min={1}
-        max={1000}
-        value={currentVelocity}
-      />
-      ポイントを消化する。稼働日は週
-      <InputNumber<number>
-        onChange={(value) => setWorkDaysPerWeek(value)}
-        min={1}
-        max={7}
-        value={workDaysPerWeek}
-      />
-      日とする。
+          <InputNumber<number>
+            onChange={(value) => setCurrentVelocity(value)}
+            min={1}
+            max={1000}
+            value={currentVelocity}
+          />
+          ポイントを消化する。稼働日は週
+          <InputNumber<number>
+            onChange={(value) => setWorkDaysPerWeek(value)}
+            min={1}
+            max={7}
+            value={workDaysPerWeek}
+          />
+          日とする。
+        </div>
+        <div>
+          <UploadButton
+            labelId="upload"
+            onSelectFiles={handleSelectFiles}
+          >
+            PivotalTrackerのCSVをアップロード
+          </UploadButton>
+        </div>
+
+      </div>
       {tasks.length > 1 && <Gantt
         tasks={tasks}
         locale="ja"
+        ganttHeight={800}
+        viewMode={ViewMode.Week}
       />}
-    </>
+    </div>
   )
 }

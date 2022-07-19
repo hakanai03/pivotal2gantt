@@ -2,22 +2,6 @@ import {Dayjs} from "dayjs"
 import {Ticket} from "@/types/pivotal/Ticket"
 import {Task} from "gantt-task-react"
 
-/*
-export const transformToTicketsPerWeek = (pivotalTickets: Ticket[], currentVelocity: number): Ticket[][] => {
-  const pivotalTicketsPerWeek: Ticket[][] = pivotalTickets.reduce((prev, current) => {
-    const ticketsPerCurrentWeek: Ticket[] = prev[prev.length - 1]
-    const accumulationPointsPerCurrentWeek: number = ticketsPerCurrentWeek.reduce((p, c) => p + current.estimate, 0)
-    if (accumulationPointsPerCurrentWeek > currentVelocity) {
-      prev.push([current])
-    }
-    prev[prev.length - 1].push(current)
-    return prev
-  }, [[]] as Ticket[][])
-  return pivotalTicketsPerWeek
-}
-*/
-
-
 interface InternalTicket extends Ticket {
   accumulationEstimate: number
 }
@@ -50,13 +34,14 @@ export const makeGanttTasks = (tickets: Ticket[], config: Config): Task[] => {
     const offsetWeek = t.iteration - 1
     const monday = config.startDay.add(offsetWeek, "week")
     const velocityPerDay = config.currentVelocity / config.workDaysPerWeek
-    const start = monday.add(Math.floor((t.accumulationEstimate - offsetWeek * config.currentVelocity - t.estimate) / velocityPerDay), "day").toDate()
-    const end = monday.add(Math.floor((t.accumulationEstimate - offsetWeek * config.currentVelocity) / velocityPerDay), "day").toDate()
+    const start = monday.add(Math.floor((t.accumulationEstimate - (offsetWeek * config.currentVelocity)) / velocityPerDay), "day")
+    const end = monday.add(Math.floor((t.accumulationEstimate - (offsetWeek * config.currentVelocity) + t.estimate) / velocityPerDay), "day")
 
     return ({
-      start,
-      end,
-      name: t.title,
+      start: start.toDate(),
+      end: end.toDate(),
+      name: `${t.title} (第${offsetWeek + 1}週, ${t.estimate}point)`,
+      project: t.labels,
       id: `${t.id}`,
       type: "task",
       progress: 0,
