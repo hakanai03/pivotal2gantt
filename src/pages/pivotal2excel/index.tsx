@@ -3,7 +3,8 @@ import {Button, InputNumber} from "antd"
 import {Gantt, Task, ViewMode} from "gantt-task-react"
 import dayjs, {Dayjs} from 'dayjs'
 import weekday from 'dayjs/plugin/weekday'
-import {stringify} from "csv-stringify/lib/sync"
+import {stringify} from "csv-stringify/sync"
+import downloadFile from "js-file-download"
 
 import {UploadButton} from "@/components/Upload"
 import {Ticket} from "@/types/pivotal/Ticket"
@@ -42,7 +43,16 @@ export const Pivotal2Excel = () => {
   })
 
   const downloadCSV = () => {
-    const csv = stringify(tasks, {header: true})
+    const data = tasks.map(i => ({
+      ...i,
+      start: dayjs(i.start).toISOString(),
+      end: dayjs(i.end).toISOString(),
+    }))
+    console.log(data)
+    const csv = stringify(data, {
+      header: true,
+    })
+    downloadFile(csv, "見積もり.csv")
   }
 
   return (

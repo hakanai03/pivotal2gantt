@@ -832,11 +832,6 @@ csstype@^3.0.2:
   resolved "https://registry.yarnpkg.com/csstype/-/csstype-3.1.0.tgz#4ddcac3718d787cf9df0d1b7d15033925c8f29f2"
   integrity sha512-uX1KG+x9h5hIJsaKR9xHUeUraxf8IODOwq9JLNPq6BwB04a/xgpq3rcx47l5BZu5zBPlgD342tdke3Hom/nJRA==
 
-csv-generate@^4.2.0:
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/csv-generate/-/csv-generate-4.2.0.tgz#06e23634415c1d5a7cb111102bbea868b0857e6f"
-  integrity sha512-zlIESlGQaYqIhNYwBN2pj5KXNMYbAXZYMOgNoVSoYV8MQyGZwcNWX+kx5LHxocp+zQDqzSgeKh+e+AZs+nCq4Q==
-
 csv-parse@^5.3.0:
   version "5.3.0"
   resolved "https://registry.yarnpkg.com/csv-parse/-/csv-parse-5.3.0.tgz#85cc02fc9d1c89bd1b02e69069c960f8b8064322"
@@ -846,16 +841,6 @@ csv-stringify@^6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/csv-stringify/-/csv-stringify-6.2.0.tgz#f89881e8f61293bf5af11f421266b5da7b744030"
   integrity sha512-dcUbQLRTTDcgQxgEU8V9IctkaCwHZjZfzUZ5ZB3RY8Y+pXtdtl5iVQHfGzANytFFkRKanYzBXrkfpNdGR7eviA==
-
-csv@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/csv/-/csv-6.2.0.tgz#edab9979067fe9bb4c6a4381aaebba96ef5b3017"
-  integrity sha512-yT7dkCsJLJ36NUW0d0ei7parOcUCx/QVkK77puwA/rF4bMciTB5Kf+wuegL+7zh8s6revFM+BFQ2h+U2k4jgBQ==
-  dependencies:
-    csv-generate "^4.2.0"
-    csv-parse "^5.3.0"
-    csv-stringify "^6.2.0"
-    stream-transform "^3.2.0"
 
 date-fns@2.x:
   version "2.28.0"
@@ -1756,6 +1741,11 @@ isexe@^2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/isexe/-/isexe-2.0.0.tgz#e8fbf374dc556ff8947a10dcb0572d633f2cfa10"
   integrity sha512-RHxMLp9lnKHGHRng9QFhRCMbYAcVpn69smSGcq3f36xjgVVWThj4qqLbTLlq7Ssj8B+fIQ1EuCEGI2lKsyQeIw==
+
+js-file-download@^0.4.12:
+  version "0.4.12"
+  resolved "https://registry.yarnpkg.com/js-file-download/-/js-file-download-0.4.12.tgz#10c70ef362559a5b23cdbdc3bd6f399c3d91d821"
+  integrity sha512-rML+NkoD08p5Dllpjo0ffy4jRHeY6Zsapvr/W86N7E0yuzAO6qa5X9+xog6zQNlH102J7IXljNY2FtS6Lj3ucg==
 
 "js-tokens@^3.0.0 || ^4.0.0", js-tokens@^4.0.0:
   version "4.0.0"
@@ -2725,11 +2715,6 @@ ssf@~0.11.2:
   integrity sha512-+idbmIXoYET47hH+d7dfm2epdOMUDjqcB4648sTZ+t2JwoyBFL/insLfB/racrDmsKB3diwsDA696pZMieAC5g==
   dependencies:
     frac "~1.1.2"
-
-stream-transform@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/stream-transform/-/stream-transform-3.2.0.tgz#5b94300c09f4db30d682f5b3bad97c3c8aac81d1"
-  integrity sha512-M22v88wNknyJiIyHYoiIYI5RPl/R7tkf92j1YNkmrbe5XRGHW0jW8n458j1njOrR4Edcj8bwbpSV0iLIWon1hg==
 
 string-convert@^0.2.0:
   version "0.2.1"
