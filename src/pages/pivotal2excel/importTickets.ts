@@ -1,7 +1,7 @@
 import {Ticket, TicketType, CurrentState, currentStates, ticketTypes} from "@/types/pivotal/Ticket"
 import {parse} from "csv-parse/sync"
 
-interface CSVTicket {
+type CSVTicket = {
   "Accepted at": string
   "Comment": string
   "Created at": string
@@ -30,6 +30,12 @@ const isTicketType = (x: string): x is TicketType => {
   return (ticketTypes as readonly string[]).indexOf(x) >= 0
 }
 
+const tryParseInt = (x: any) => {
+  const result = parseInt(x, 10)
+  if(isNaN(result)) return 0
+  return result
+}
+
 const formatTicket = (ticket: CSVTicket): Ticket => {
   if (!isCurrentState(ticket["Current State"]) || !isTicketType(ticket["Type"])) throw new Error()
 
@@ -40,9 +46,9 @@ const formatTicket = (ticket: CSVTicket): Ticket => {
     currentState: ticket["Current State"],
     deadline: ticket["Deadline"],
     description: ticket["Description"],
-    Estimate: parseInt(ticket["Estimate"], 10),
-    id: parseInt(ticket["Id"], 10),
-    iteration: parseInt(ticket["Iteration"], 10),
+    estimate: tryParseInt(ticket["Estimate"]),
+    id: tryParseInt(ticket["Id"]),
+    iteration: tryParseInt(ticket["Iteration"]),
     IterationEnd: ticket["Iteration End"],
     iterationStart: ticket["Iteration Start"],
     labels: ticket["Labels"],

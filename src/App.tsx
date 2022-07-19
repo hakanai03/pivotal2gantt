@@ -4,7 +4,8 @@ import ReactDOM from "react-dom/client"
 import {Providers} from "@/Providers"
 
 import "@/app.css"
-import "antd/dist/antd.dark.css"
+// import "antd/dist/antd.dark.css"
+import "gantt-task-react/dist/index.css"
 import {Pivotal2Excel} from "@/pages/pivotal2excel"
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

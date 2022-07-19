@@ -11,7 +11,7 @@ export interface Ticket {
   currentState: CurrentState
   deadline: string
   description: string
-  Estimate: number
+  estimate: number
   id: number
   iteration: number
   IterationEnd: string
