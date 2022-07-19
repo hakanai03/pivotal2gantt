@@ -12,6 +12,13 @@ export default defineConfig({
   server: {
     host: true,
   },
+  css: {
+    preprocessorOptions: {
+      less: {
+        javascriptEnabled: true,
+      },
+    },
+  },
   optimizeDeps: {
     esbuildOptions: {
       // Node.js global to browser globalThis
