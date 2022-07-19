@@ -4,22 +4,13 @@ import {readFile} from "@/utils/fileReader"
 import {Gantt, Task, ViewMode} from "gantt-task-react"
 import React, {useState} from "react"
 import {tryImport} from "./importTickets"
-
+import {Dayjs} from 'dayjs'
+import dayjsGenerateConfig from 'rc-picker/lib/generate/dayjs'
+import generatePicker from 'antd/es/date-picker/generatePicker'
 
 type OnSelectFiles = (e: React.ChangeEvent<HTMLInputElement>) => void
 
-const transformToTicketsPerWeek = (pivotalTickets: Ticket[], currentVelocity: number): Ticket[][] => {
-  const pivotalTicketsPerWeek: Ticket[][] = pivotalTickets.reduce((prev, current) => {
-    const ticketsPerCurrentWeek: Ticket[] = prev[prev.length - 1]
-    const accumulationPointsPerCurrentWeek: number = ticketsPerCurrentWeek.reduce((p, c) => p + current.estimate, 0)
-    if (accumulationPointsPerCurrentWeek > currentVelocity) {
-      prev.push([current])
-    }
-    prev[prev.length - 1].push(current)
-    return prev
-  }, [[]] as Ticket[][])
-  return pivotalTicketsPerWeek
-}
+const DatePicker = generatePicker<Dayjs>(dayjsGenerateConfig)
 
 export const Pivotal2Excel = () => {
   const [tickets, setTickets] = useState<Ticket[]>([])
@@ -33,8 +24,6 @@ export const Pivotal2Excel = () => {
     })
       .catch(err => console.error(err))
   }
-
-  console.log(transformToTicketsPerWeek(tickets, 10))
 
   const tasks: Task[] = tickets.map(i => ({
     start: new Date(i.iterationStart),
@@ -54,6 +43,10 @@ export const Pivotal2Excel = () => {
       >
         アップロード
       </UploadButton>
+      <DatePicker
+        onChange={(date) => {console.log(date)}}
+        showToday
+      />
       {tasks.length > 1 && <Gantt
         tasks={tasks}
         viewMode={ViewMode.Week}
