@@ -1,14 +1,16 @@
+import React, {useState} from "react"
+import {Button, InputNumber} from "antd"
+import {Gantt, Task, ViewMode} from "gantt-task-react"
+import dayjs, {Dayjs} from 'dayjs'
+import weekday from 'dayjs/plugin/weekday'
+import json2csv from "json2csv"
+
 import {UploadButton} from "@/components/Upload"
 import {Ticket} from "@/types/pivotal/Ticket"
 import {readFile} from "@/utils/fileReader"
-import {Gantt, Task, ViewMode} from "gantt-task-react"
-import React, {useState} from "react"
 import {tryImport} from "./importTickets"
-import dayjs, {Dayjs} from 'dayjs'
-import weekday from 'dayjs/plugin/weekday'
 import {DatePicker} from "@/components/DatePicker"
 import {makeGanttTasks} from "./algorithm"
-import {InputNumber} from "antd"
 
 dayjs.extend(weekday)
 
@@ -38,6 +40,10 @@ export const Pivotal2Excel = () => {
     workDaysPerWeek: workDaysPerWeek > 0 ? workDaysPerWeek : 1,
     includeBugTicket: true,
   })
+
+  const downloadCSV = () => {
+    json2csv
+  }
 
   return (
     <div style={{margin: "1rem"}}>
@@ -72,6 +78,7 @@ export const Pivotal2Excel = () => {
           >
             PivotalTrackerのCSVをアップロード
           </UploadButton>
+          <Button onClick={downloadCSV}>ガントチャートのCSV出力</Button>
         </div>
 
       </div>
