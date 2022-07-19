@@ -3,7 +3,7 @@ import {Button, InputNumber} from "antd"
 import {Gantt, Task, ViewMode} from "gantt-task-react"
 import dayjs, {Dayjs} from 'dayjs'
 import weekday from 'dayjs/plugin/weekday'
-import json2csv from "json2csv"
+import {Json2CsvTransform} from "json2csv"
 
 import {UploadButton} from "@/components/Upload"
 import {Ticket} from "@/types/pivotal/Ticket"
@@ -42,7 +42,6 @@ export const Pivotal2Excel = () => {
   })
 
   const downloadCSV = () => {
-    json2csv
   }
 
   return (
