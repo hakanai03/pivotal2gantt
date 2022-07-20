@@ -67,8 +67,9 @@ export const makeGanttTasks = (tickets: Ticket[], config: Config): Task[] => {
   const tasks: Task[] = internalTickets.map(t => {
     const offsetWeek = t.iteration - 1
     const monday = config.startDay.add(offsetWeek, "week")
-    const start = monday.add(Math.floor((t.accumulationEstimate - (offsetWeek * config.currentVelocity)) / velocityPerDay), "day")
-    const end = monday.add(Math.floor((t.accumulationEstimate - (offsetWeek * config.currentVelocity) + t.estimate) / velocityPerDay), "day")
+    const start = monday.add(Math.floor((t.accumulationEstimate - (offsetWeek * config.currentVelocity) - t.estimate) / velocityPerDay), "day")
+    const end = monday.add(Math.floor((t.accumulationEstimate - (offsetWeek * config.currentVelocity)) / velocityPerDay), "day")
+    console.log(monday, start, t.accumulationEstimate, velocityPerDay)
 
     return convert({
       start: start.toDate(),
@@ -87,7 +88,6 @@ export const makeGanttTasks = (tickets: Ticket[], config: Config): Task[] => {
         if (reversedIndex < 0) return prev.length - 1
         return (prev.length - 1) - reversedIndex
       })()
-      console.log(current.end, prev[lastProjectIndex].end, lastProjectIndex)
       current.start = prev[lastProjectIndex].end
       current.end = prev[lastProjectIndex].end
     }
