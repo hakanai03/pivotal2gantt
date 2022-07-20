@@ -63,10 +63,10 @@ export const makeGanttTasks = (tickets: Ticket[], config: Config): Task[] => {
       iteration: Math.ceil(internalTicket.accumulationEstimate / config.currentVelocity),
     }))
 
+  const velocityPerDay = config.currentVelocity / config.workDaysPerWeek
   const tasks: Task[] = internalTickets.map(t => {
     const offsetWeek = t.iteration - 1
     const monday = config.startDay.add(offsetWeek, "week")
-    const velocityPerDay = config.currentVelocity / config.workDaysPerWeek
     const start = monday.add(Math.floor((t.accumulationEstimate - (offsetWeek * config.currentVelocity)) / velocityPerDay), "day")
     const end = monday.add(Math.floor((t.accumulationEstimate - (offsetWeek * config.currentVelocity) + t.estimate) / velocityPerDay), "day")
 
@@ -79,7 +79,20 @@ export const makeGanttTasks = (tickets: Ticket[], config: Config): Task[] => {
       type: t.type,
       progress: 0,
     })
-  })
+  }).reduce((prev, current) => {
+    // milesnoteの時だけmilestoneの時間を直近の最後のprojectのend時間で上書きする
+    if (current.type === "milestone") {
+      const lastProjectIndex = (() => {
+        const reversedIndex = ([...prev].reverse()).findIndex((t: Task) => t.type === "task")
+        if (reversedIndex < 0) return prev.length - 1
+        return (prev.length - 1) - reversedIndex
+      })()
+      console.log(current.end, prev[lastProjectIndex].end, lastProjectIndex)
+      current.start = prev[lastProjectIndex].end
+      current.end = prev[lastProjectIndex].end
+    }
+    return [...prev, current]
+  }, [] as Task[])
 
   const tasksWithProject = tasks.reduce((prev, current) => {
     if (!current.project) return [...prev, current]
@@ -88,7 +101,6 @@ export const makeGanttTasks = (tickets: Ticket[], config: Config): Task[] => {
 
     if (isExistProject) {
       const index = prev.findIndex((task => task.project === current.project))
-      console.log(existProjects, isExistProject, index, current.project, prev[index])
       prev[index].end = current.end
       return [...prev, current]
     } else {

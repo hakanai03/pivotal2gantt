@@ -17,7 +17,7 @@ export const GanttChart = () => {
       ...state,
       tasks,
     })
-  }, [state.tickets])
+  }, [state.tickets, state.startDay, state.currentVelocity, state.workDaysPerWeek])
 
   if (state.tasks.length <= 0) return <></>
   return (
