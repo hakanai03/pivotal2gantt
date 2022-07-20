@@ -19,7 +19,7 @@ type OnSelectFiles = (e: React.ChangeEvent<HTMLInputElement>) => void
 
 const firstDayOfWeek = dayjs().startOf("week").add(1, "day")
 
-export const Pivotal2Excel = () => {
+export const Pivotal2Gantt = () => {
   const [tickets, setTickets] = useState<Ticket[]>([])
   const [currentVelocity, setCurrentVelocity] = useState<number>(10)
   const [workDaysPerWeek, setWorkDaysPerWeek] = useState<number>(5)
@@ -57,45 +57,54 @@ export const Pivotal2Excel = () => {
 
   return (
     <div style={{margin: "1rem"}}>
-      <div style={{display: "flex", justifyContent: "space-between", marginBottom: "1rem"}}>
-        <div>
-          <DatePicker
-            defaultValue={startDay}
-            onChange={(day) => day && setStartDay(day)}
-            disabledDate={(day) => day.weekday() !== 1}
-          />
-          の週からプロジェクトを開始し、週あたり
+      <div style={{display: "flex", justifyContent: "space-between", marginBottom: "1rem", alignItems: "center"}}>
+        <div style={{display: "flex", gap: "2rem"}}>
+          <div>
+            作業開始:
+            <DatePicker
+              defaultValue={startDay}
+              onChange={(day) => day && setStartDay(day)}
+              disabledDate={(day) => day.weekday() !== 1}
+            />
+          </div>
 
-          <InputNumber<number>
-            onChange={(value) => setCurrentVelocity(value)}
-            min={1}
-            max={1000}
-            value={currentVelocity}
-          />
-          ポイントを消化する。稼働日は週
-          <InputNumber<number>
-            onChange={(value) => setWorkDaysPerWeek(value)}
-            min={1}
-            max={7}
-            value={workDaysPerWeek}
-          />
-          日とする。
+          <div>
+            消費ポイント/週:
+            <InputNumber<number>
+              onChange={(value) => setCurrentVelocity(value)}
+              min={1}
+              max={1000}
+              value={currentVelocity}
+              style={{width: "4rem"}}
+            />ポイント
+          </div>
+
+          <div>
+            稼働日数/週:
+            <InputNumber<number>
+              onChange={(value) => setWorkDaysPerWeek(value)}
+              min={1}
+              max={7}
+              style={{width: "4rem"}}
+              value={workDaysPerWeek}
+            />日
+          </div>
         </div>
-        <div>
-          <UploadButton
-            labelId="upload"
-            onSelectFiles={handleSelectFiles}
-          >
-            PivotalTrackerのCSVをアップロード
-          </UploadButton>
-          <Button onClick={downloadCSV}>ガントチャートのCSV出力</Button>
+        <div style={{display: "inline-flex"}}>
+          <div style={{display: "flex", flexDirection: "column", alignItems: "center", marginRight: "1rem"}}>
+            <small>Pivotal TrackerのCSV</small>
+            <UploadButton labelId="upload" onSelectFiles={handleSelectFiles}>インポート</UploadButton>
+          </div>
+          <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+            <small>ガントチャートのCSV</small>
+            <Button onClick={downloadCSV}>エクスポート</Button>
+          </div>
         </div>
 
       </div>
       {tasks.length > 1 && <Gantt
         tasks={tasks}
         locale="ja"
-        ganttHeight={800}
         viewMode={ViewMode.Week}
       />}
     </div>
