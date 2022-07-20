@@ -22,6 +22,7 @@ export const GanttChart = () => {
   if (state.tasks.length <= 0) return <></>
   return (
     <Gantt
+      locale="ja"
       tasks={state.tasks}
       viewMode={state.viewMode}
     />
