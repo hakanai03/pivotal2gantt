@@ -1,5 +1,9 @@
-import {Ticket, TicketType, CurrentState, currentStates, ticketTypes} from "@/types/pivotal/Ticket"
+import {useContext} from "react"
 import {parse} from "csv-parse/sync"
+import {UploadButton} from "@/components/Upload"
+import {readFile} from "@/utils/fileReader"
+import {Pivotal2GanttContext} from "@/pages/pivotal2gantt/Pivotal2GanttProvider"
+import {Ticket, TicketType, CurrentState, currentStates, ticketTypes} from "@/types/pivotal/Ticket"
 
 type CSVTicket = {
   "Accepted at": string
@@ -32,7 +36,7 @@ const isTicketType = (x: string): x is TicketType => {
 
 const tryParseInt = (x: any) => {
   const result = parseInt(x, 10)
-  if(isNaN(result)) return 0
+  if (isNaN(result)) return 0
   return result
 }
 
@@ -67,4 +71,24 @@ export const tryImport = (tickets: any): Ticket[] => {
     skipEmptyLines: true,
   })
   return result.map((i: CSVTicket) => formatTicket(i))
+}
+
+export const PivotalCSVUploadButton = () => {
+  const {state, setState} = useContext(Pivotal2GanttContext)
+
+  const handleSelectFiles = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files) return
+    const files: File[] = Array.from(e.target.files)
+    readFile(files[0])
+      .then(res => {
+        const result = tryImport(res)
+        setState({
+          ...state,
+          tickets: result,
+        })
+      })
+      .catch(err => console.error(err))
+  }
+
+  return <UploadButton labelId="upload" onSelectFiles={handleSelectFiles}>インポート</UploadButton>
 }
