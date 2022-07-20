@@ -1,5 +1,5 @@
 import React, {useState} from "react"
-import {Button, InputNumber} from "antd"
+import {Button, InputNumber, Select} from "antd"
 import {Gantt, Task, ViewMode} from "gantt-task-react"
 import dayjs, {Dayjs} from 'dayjs'
 import weekday from 'dayjs/plugin/weekday'
@@ -24,6 +24,7 @@ export const Pivotal2Gantt = () => {
   const [currentVelocity, setCurrentVelocity] = useState<number>(10)
   const [workDaysPerWeek, setWorkDaysPerWeek] = useState<number>(5)
   const [startDay, setStartDay] = useState<Dayjs>(firstDayOfWeek)
+  const [viewMode, setViewMode] = useState<ViewMode>(ViewMode.Week)
 
   const handleSelectFiles: OnSelectFiles = (e) => {
     if (!e.target.files) return
@@ -90,8 +91,20 @@ export const Pivotal2Gantt = () => {
             />日
           </div>
         </div>
-        <div style={{display: "inline-flex"}}>
-          <div style={{display: "flex", flexDirection: "column", alignItems: "center", marginRight: "1rem"}}>
+        <div>
+          <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+            <small>表示単位</small>
+            <Select defaultValue={viewMode} onChange={(value) => setViewMode(value)} style={{width: "6rem"}}>
+              <Select.Option value={ViewMode.QuarterDay}>6時間</Select.Option>
+              <Select.Option value={ViewMode.HalfDay}>12時間</Select.Option>
+              <Select.Option value={ViewMode.Day}>日</Select.Option>
+              <Select.Option value={ViewMode.Week}>週</Select.Option>
+              <Select.Option value={ViewMode.Month}>月</Select.Option>
+            </Select>
+          </div>
+        </div>
+        <div style={{display: "inline-flex", gap: "1rem"}}>
+          <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
             <small>Pivotal TrackerのCSV</small>
             <UploadButton labelId="upload" onSelectFiles={handleSelectFiles}>インポート</UploadButton>
           </div>
@@ -105,7 +118,7 @@ export const Pivotal2Gantt = () => {
       {tasks.length > 1 && <Gantt
         tasks={tasks}
         locale="ja"
-        viewMode={ViewMode.Week}
+        viewMode={viewMode}
       />}
     </div>
   )

@@ -17,8 +17,7 @@
     "gantt-task-react": "^0.3.9",
     "js-file-download": "^0.4.12",
     "react": "^18.0.0",
-    "react-dom": "^18.0.0",
-    "xlsx": "^0.18.5"
+    "react-dom": "^18.0.0"
   },
   "devDependencies": {
     "@esbuild-plugins/node-globals-polyfill": "^0.1.1",
