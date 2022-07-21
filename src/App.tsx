@@ -5,7 +5,6 @@ import {Providers} from "@/Providers"
 
 import "gantt-task-react/dist/index.css"
 import "antd/dist/antd.css"
-// import "antd/dist/antd.dark.css"
 
 import "@/app.css"
 import {Pivotal2Gantt} from "@/pages/pivotal2gantt"
