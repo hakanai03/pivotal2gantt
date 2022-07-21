@@ -69,7 +69,6 @@ export const makeGanttTasks = (tickets: Ticket[], config: Config): Task[] => {
     const monday = config.startDay.add(offsetWeek, "week")
     const start = monday.add(Math.floor((t.accumulationEstimate - (offsetWeek * config.currentVelocity) - t.estimate) / velocityPerDay), "day")
     const end = monday.add(Math.floor((t.accumulationEstimate - (offsetWeek * config.currentVelocity)) / velocityPerDay), "day")
-    console.log(monday, start, t.accumulationEstimate, velocityPerDay)
 
     return convert({
       start: start.toDate(),

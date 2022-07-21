@@ -10,6 +10,8 @@ export interface Pivotal2GanttState {
   viewMode: ViewMode
   workDaysPerWeek: number
   currentVelocity: number
+  showTask: boolean
+  showRelease: boolean
 }
 
 const defaultState: Pivotal2GanttState = {
@@ -19,6 +21,8 @@ const defaultState: Pivotal2GanttState = {
   viewMode: ViewMode.Week,
   currentVelocity: 10,
   workDaysPerWeek: 5,
+  showTask: true,
+  showRelease: true
 }
 
 export interface Context {
