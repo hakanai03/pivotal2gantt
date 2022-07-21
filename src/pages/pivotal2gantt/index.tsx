@@ -6,6 +6,7 @@ import {GanttViewModeSegmented} from "./components/GanttViewModeSegmented"
 import {ExportGanttButton} from "./components/ExportGanttButton"
 import {PivotalCSVUploadButton} from "./components/PivotalCSVUploadButton"
 import {ShowTaskTicketCheckBox} from "./components/ShowTaskTicketCheckBox"
+import {TaskDetailTable} from "./components/TaskDetailTable"
 
 
 export const Pivotal2Gantt = () => {
@@ -50,6 +51,7 @@ export const Pivotal2Gantt = () => {
         </div>
       </div>
       <GanttChart />
+      <TaskDetailTable />
     </div>
   )
 }

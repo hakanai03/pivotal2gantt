@@ -29,7 +29,7 @@ export const GanttChart = () => {
   return (
     <Gantt
       locale="ja"
-      listCellWidth={state.showList ? "100" : ""}
+      listCellWidth={state.showList ? undefined : ""}
       tasks={state.tasks}
       viewMode={state.viewMode}
     />
