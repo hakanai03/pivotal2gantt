@@ -20,7 +20,7 @@ export const ShowTaskTicketCheckBox = () => {
   }
 
   return (
-    <div style={{display: "flex"}}>
+    <div style={{display: "flex", height: "100%", alignItems: "center"}}>
       <Checkbox checked={state.showTask} onChange={setShowTask}>
         作業項目
       </Checkbox>
