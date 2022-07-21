@@ -5,6 +5,14 @@ import {Pivotal2GanttContext} from "../Pivotal2GanttProvider"
 
 export const ShowTaskTicketCheckBox = () => {
   const {state, setState} = useContext(Pivotal2GanttContext)
+
+  const setShowList = (e: CheckboxChangeEvent) => {
+    setState({
+      ...state,
+      showList: e.target.checked,
+    })
+  }
+
   const setShowTask = (e: CheckboxChangeEvent) => {
     setState({
       ...state,
@@ -19,8 +27,12 @@ export const ShowTaskTicketCheckBox = () => {
     })
   }
 
+
   return (
-    <div style={{display: "flex", height: "100%", alignItems: "center"}}>
+    <div style={{display: "flex", height: "100%", alignItems: "center", userSelect: "none"}}>
+      <Checkbox checked={state.showList} onChange={setShowList}>
+        左リスト表示
+      </Checkbox>
       <Checkbox checked={state.showTask} onChange={setShowTask}>
         作業項目
       </Checkbox>
